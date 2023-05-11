@@ -1,0 +1,28 @@
+{
+  "name": "tagorth",
+  "version": "0.0.0",
+  "description": "A Generaric Time Table Scheduling Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "start": "npm run build && concurrently \"tsc --watch\" \"nodemon dist/index\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-typescript": "7.21.5",
+    "@jest/globals": "29.5.0",
+    "concurrently": "8.0.1",
+    "jest": "29.5.0",
+    "nodemon": "2.0.22",
+    "ts-jest": "29.1.0",
+    "typescript": "5.0.4"
+  },
+  "dependencies": {
+    "@types/jest": "29.5.1",
+    "dayjs": "1.11.7",
+    "lodash": "4.17.21"
+  }
+}
