@@ -1,5 +1,6 @@
 import moment from "moment";
 import * as _ from "lodash";
+import { reportTable } from "./report";
 // days to use this week
 const days = [1, 2, 3, 4, 5, 6];
 
@@ -40,6 +41,11 @@ const classData = [
   },
 ];
 
+const totalSlots = slotsPerDay * days.length;
+const requiredSlot = _.sumBy(classData, (c) => c.freq);
+
+console.log({ totalSlots, requiredSlot });
+
 type ClassData = (typeof classData)[0];
 
 const classSlotSize = {
@@ -48,14 +54,23 @@ const classSlotSize = {
 };
 
 const tt: string[][] = [];
+
+let minGap = totalSlots / requiredSlot;
+let totalUsedSlots = 0;
+
+console.log({ minGap });
+
+const positionalProbability = requiredSlot / totalSlots;
+
 for (let i = 0; i < days.length; i++) {
   const td: string[] = [];
   for (let j = 0; j < slotsPerDay; j++) {
     const toPut = getMinimumDistanceClass(classData, i);
-    if (toPut) {
+    if (toPut && Math.random() > positionalProbability) {
       td.push(toPut.name);
       const index = _.findIndex(classData, (c) => c.name === toPut.name);
       classData[index].used += 1;
+      totalUsedSlots++;
       continue;
     }
 
@@ -65,6 +80,9 @@ for (let i = 0; i < days.length; i++) {
 }
 
 console.table(tt);
+
+const report = reportTable(tt);
+console.log(report);
 
 function getMinimumDistanceClass(input: ClassData[], day: number) {
   const classWithProbabilities = _.map(input, (c) => {
@@ -77,6 +95,7 @@ function getMinimumDistanceClass(input: ClassData[], day: number) {
   const sorted = classWithProbabilities.sort(
     (a, b) => b.probability - a.probability
   );
+
   // const sorted = _.sortBy(classWithProbabilities, 'probability')
   const top = _.head(sorted);
 
