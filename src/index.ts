@@ -3,11 +3,13 @@ import * as _ from "lodash";
 // days to use this week
 const days = [1, 2, 3, 4, 5, 6];
 
-const slotsPerDay = 6;
+const slotsPerDay = 8;
 
 enum Subjects {
   MATH = "MATH",
   SCIENCE = "SCIENCE",
+  ENGLISH = "ENGLISH",
+  SST = "SST",
   EMPTY = "EMPTY",
 }
 
@@ -21,6 +23,18 @@ const classData = [
   {
     name: Subjects.SCIENCE,
     freq: 6,
+    used: 0,
+    size: 1,
+  },
+  {
+    name: Subjects.ENGLISH,
+    freq: 14,
+    used: 0,
+    size: 1,
+  },
+  {
+    name: Subjects.SST,
+    freq: 4,
     used: 0,
     size: 1,
   },
@@ -70,6 +84,3 @@ function getMinimumDistanceClass(input: ClassData[], day: number) {
 
   return top;
 }
-
-const res = getMinimumDistanceClass(classData, 0);
-res;
